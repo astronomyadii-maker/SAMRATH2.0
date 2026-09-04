@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — VittaSetu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/chatbot.css">
+</head>
+<body class="app-body">
+
+<header class="app-nav">
+  <div class="app-nav__brand">
+    <svg width="26" height="26" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+      <circle cx="17" cy="17" r="16" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M10 17.5L14.5 22L24 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>VittaSetu</span>
+  </div>
+  <nav class="app-nav__links">
+    <a href="dashboard.html" class="is-active">Passbook</a>
+    <a href="loan-calculator.html">Loan calculator</a>
+  </nav>
+  <div class="app-nav__user">
+    <div class="app-nav__user-info">
+      <span class="app-nav__user-name" id="navUserName">—</span>
+      <span class="app-nav__user-badge" id="navUserBadge">—</span>
+    </div>
+    <button class="btn-secondary btn-secondary--small" id="logoutBtn" type="button">Log out</button>
+  </div>
+</header>
+
+<main class="app-main">
+
+  <section class="stat-strip">
+    <div class="stat-strip__item">
+      <span class="stat-strip__label">Current balance</span>
+      <span class="stat-strip__value" id="statBalance">₹0.00</span>
+    </div>
+    <div class="stat-strip__item">
+      <span class="stat-strip__label">Total credited</span>
+      <span class="stat-strip__value stat-strip__value--credit" id="statCredit">₹0.00</span>
+    </div>
+    <div class="stat-strip__item">
+      <span class="stat-strip__label">Total debited</span>
+      <span class="stat-strip__value stat-strip__value--debit" id="statDebit">₹0.00</span>
+    </div>
+    <div class="stat-strip__item">
+      <span class="stat-strip__label">Entries recorded</span>
+      <span class="stat-strip__value" id="statCount">0</span>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel__header">
+      <h2>Add an entry</h2>
+    </div>
+    <form id="txnForm" class="txn-form" novalidate>
+      <div class="segmented segmented--txn" id="txnType" role="radiogroup" aria-label="Entry type">
+        <button type="button" class="segmented__opt is-selected" data-value="credit" role="radio" aria-checked="true">Credit (money in)</button>
+        <button type="button" class="segmented__opt" data-value="debit" role="radio" aria-checked="false">Debit (money out)</button>
+      </div>
+      <input type="hidden" name="type" id="txnTypeValue" value="credit">
+
+      <div class="txn-form__row">
+        <div class="field">
+          <label for="txnAmount">Amount (₹)</label>
+          <input type="number" id="txnAmount" name="amount" min="1" step="0.01" placeholder="0.00" required>
+        </div>
+        <div class="field">
+          <label for="txnCategory">Category</label>
+          <select id="txnCategory" name="category">
+            <option value="sales">Sales</option>
+            <option value="supplies">Supplies</option>
+            <option value="rent">Rent</option>
+            <option value="salary">Salary / wages</option>
+            <option value="utilities">Utilities</option>
+            <option value="loan-repayment">Loan repayment</option>
+            <option value="general">General</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="txnDate">Date</label>
+          <input type="date" id="txnDate" name="date">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="txnNote">Note (optional)</label>
+        <input type="text" id="txnNote" name="note" placeholder="e.g. Weekly stock purchase from supplier">
+      </div>
+
+      <span class="field__error" id="txnError"></span>
+      <button type="submit" class="btn-primary btn-primary--auto">Record entry</button>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="panel__header">
+      <h2>Passbook</h2>
+      <div class="filter-tabs" id="filterTabs">
+        <button type="button" class="filter-tabs__opt is-selected" data-filter="all">All</button>
+        <button type="button" class="filter-tabs__opt" data-filter="credit">Credits</button>
+        <button type="button" class="filter-tabs__opt" data-filter="debit">Debits</button>
+      </div>
+    </div>
+
+    <div class="ledger" id="ledgerWrap">
+      <div class="ledger__row ledger__row--head">
+        <span>Date</span>
+        <span>Description</span>
+        <span>Category</span>
+        <span class="ledger__num">Debit</span>
+        <span class="ledger__num">Credit</span>
+        <span></span>
+      </div>
+      <div id="ledgerBody"></div>
+      <p class="ledger__empty" id="ledgerEmpty" hidden>No entries yet — add your first transaction above.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Samarth chatbot widget -->
+<div id="chatbotRoot"></div>
+
+<script src="js/validators.js"></script>
+<script src="js/app-shell.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/chatbot.js"></script>
+</body>
+</html>

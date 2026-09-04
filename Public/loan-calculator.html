@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan calculator — VittaSetu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/chatbot.css">
+</head>
+<body class="app-body">
+
+<header class="app-nav">
+  <div class="app-nav__brand">
+    <svg width="26" height="26" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+      <circle cx="17" cy="17" r="16" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M10 17.5L14.5 22L24 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>VittaSetu</span>
+  </div>
+  <nav class="app-nav__links">
+    <a href="dashboard.html">Passbook</a>
+    <a href="loan-calculator.html" class="is-active">Loan calculator</a>
+  </nav>
+  <div class="app-nav__user">
+    <div class="app-nav__user-info">
+      <span class="app-nav__user-name" id="navUserName">—</span>
+      <span class="app-nav__user-badge" id="navUserBadge">—</span>
+    </div>
+    <button class="btn-secondary btn-secondary--small" id="logoutBtn" type="button">Log out</button>
+  </div>
+</header>
+
+<main class="app-main app-main--narrow">
+
+  <section class="panel">
+    <div class="panel__header">
+      <h2>EMI calculator</h2>
+    </div>
+
+    <form id="loanForm" class="loan-form" novalidate>
+      <div class="field">
+        <label for="loanAmount">Loan amount (₹)</label>
+        <input type="number" id="loanAmount" name="principal" min="1000" step="1000" value="500000" required>
+      </div>
+      <div class="loan-form__row">
+        <div class="field">
+          <label for="loanRate">Annual interest rate (%)</label>
+          <input type="number" id="loanRate" name="rate" min="0" step="0.1" value="11.5" required>
+        </div>
+        <div class="field">
+          <label for="loanTenure">Tenure (months)</label>
+          <input type="number" id="loanTenure" name="tenureMonths" min="1" step="1" value="36" required>
+        </div>
+      </div>
+      <span class="field__error" id="loanError"></span>
+      <button type="submit" class="btn-primary btn-primary--auto">Calculate EMI</button>
+    </form>
+
+    <div class="loan-result" id="loanResult" hidden>
+      <div class="loan-result__headline">
+        <span>Monthly EMI</span>
+        <strong id="resultEmi">₹0</strong>
+      </div>
+      <dl class="loan-result__meta">
+        <div><dt>Total interest</dt><dd id="resultInterest">₹0</dd></div>
+        <div><dt>Total payment</dt><dd id="resultTotal">₹0</dd></div>
+      </dl>
+
+      <div class="loan-result__purpose">
+        <label for="loanPurpose">Purpose (for a real application)</label>
+        <input type="text" id="loanPurpose" placeholder="e.g. Working capital for festive season stock">
+        <button type="button" class="btn-secondary" id="applyLoanBtn">Apply for this loan</button>
+        <p class="field__hint" id="applyStatus"></p>
+      </div>
+
+      <details class="schedule-details">
+        <summary>View month-by-month schedule</summary>
+        <div class="schedule-table-wrap">
+          <table class="schedule-table">
+            <thead>
+              <tr><th>Month</th><th>EMI</th><th>Principal</th><th>Interest</th><th>Balance</th></tr>
+            </thead>
+            <tbody id="scheduleBody"></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+
+</main>
+
+<div id="chatbotRoot"></div>
+
+<script src="js/app-shell.js"></script>
+<script src="js/loan-calculator.js"></script>
+<script src="js/chatbot.js"></script>
+</body>
+</html>
